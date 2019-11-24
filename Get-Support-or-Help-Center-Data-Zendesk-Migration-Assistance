@@ -1,0 +1,55 @@
+
+import requests
+import csv
+from pprint import pprint
+
+account = input('What is the account name?' )
+api_url_base = 'https://z3nrad.' + account + '.com/api/v2/'
+product_needed = input('Is this query for help_center or support? ')
+object_needed = input('Enter a resource to search for ') 
+
+user = 'rderobertis@zendesk.com' + '/token'
+pw = '7YLWWaaqbS3GZxqZLfJWYLUIB4UZf8Z1QZfqFwtF'
+
+api_query = 'https://z3nrad.zendesk.com/api/v2/help'
+
+if product_needed == 'help_center':
+    api_query = 'https://z3nrad.zendesk.com/api/v2/help_center/' + object_needed + '.json'
+elif product_needed == 'support':
+    api_query = 'https://z3nrad.zendesk.com/api/v2/' + object_needed + '.json'
+
+
+
+
+
+response = requests.get(api_query, auth=(user, pw))   
+if response.status_code == 404:
+    print('Resource not found')
+elif response.status_code == 200:
+    print('Success! Here is your ' + object_needed + ' data: ')
+    
+data = response.json()
+pprint(data)
+
+if object_needed == 'groups':
+    print('the names are:' )
+    for n in data['groups']:
+        print(n['name'])
+
+if object_needed == 'ticket_fields':
+    print('the names are:' )
+    for n in data['ticket_fields']:
+        print(n['title'])
+        
+if object_needed == 'user_segments':
+    print('the names are:' )
+    for n in data['user_segments']:
+        print(n['name'])
+        
+        
+        
+    
+if response.status_code == 200:
+    w = csv.writer(open(r'C:\Users\Ryan\Desktop\New OpenDocument Spreadsheet.csv', "w"))
+    for key, val in data.items():
+        w.writerow([key, val])
