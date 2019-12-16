@@ -9,7 +9,7 @@ product_needed = input('Is this query for help_center or support? ')
 object_needed = input('Enter a resource to search for ') 
 
 user = 'rderobertis@zendesk.com' + '/token'
-pw = '7YLWWaaqbS3GZxqZLfJWYLUIB4UZf8Z1QZfqFwtF'
+pw = 'TOKEN'
 
 api_query = 'https://z3nrad.zendesk.com/api/v2/help'
 
