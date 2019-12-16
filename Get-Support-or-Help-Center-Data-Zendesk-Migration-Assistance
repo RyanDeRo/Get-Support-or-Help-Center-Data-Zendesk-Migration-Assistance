@@ -4,12 +4,12 @@ import csv
 from pprint import pprint
 
 account = input('What is the account name?' )
-api_url_base = 'https://z3nrad.' + account + '.com/api/v2/'
+api_url_base = 'https://' + account + '.com/api/v2/'
 product_needed = input('Is this query for help_center or support? ')
 object_needed = input('Enter a resource to search for ') 
 
 user = 'rderobertis@zendesk.com' + '/token'
-pw = 'NOT A REAL TOKEN'
+pw = '7YLWWaaqbS3GZxqZLfJWYLUIB4UZf8Z1QZfqFwtF'
 
 api_query = 'https://z3nrad.zendesk.com/api/v2/help'
 
@@ -51,5 +51,7 @@ if object_needed == 'user_segments':
     
 if response.status_code == 200:
     w = csv.writer(open(r'C:\Users\Ryan\Desktop\New OpenDocument Spreadsheet.csv', "w"))
-    for key, val in data.items():
-        w.writerow([key, val])
+    object_data = data[object_needed]
+    for obj in object_data:
+        row = [obj['name'],obj['id'],obj['created_at']]
+        w.writerow(row)
